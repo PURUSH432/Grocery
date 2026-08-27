@@ -2,7 +2,7 @@ const cartButton = document.querySelector(".cart-button");
 const cartCount = cartButton.querySelector("span");
 let cartItems = 0;
 let localCart = JSON.parse(localStorage.getItem("goquick_cart") || "[]");
-const API_URL = "/api";
+const API_URL = window.GOQUICK_API_URL || "/api";
 
 async function apiRequest(path, options = {}) {
   const token = localStorage.getItem("goquick_token");
@@ -14,6 +14,12 @@ async function apiRequest(path, options = {}) {
       ...options.headers,
     },
   });
+  const contentType = response.headers.get("content-type") || "";
+  if (!contentType.includes("application/json")) {
+    throw new Error(
+      `GoQuick API is unavailable at ${API_URL}. Configure window.GOQUICK_API_URL for the deployed backend.`,
+    );
+  }
   const body = await response.json();
   if (!response.ok)
     throw new Error(body.error || body.details || "Request failed");

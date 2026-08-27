@@ -24,6 +24,19 @@ npm start
 
 Open `http://localhost:4173`.
 
+## GitHub Pages deployment
+
+GitHub Pages hosts the frontend only. Deploy `server.js` and its MySQL database
+to a Node.js host, then define `window.GOQUICK_API_URL` before `script.js` in
+`index.html`, for example:
+
+```html
+<script>
+   window.GOQUICK_API_URL = "https://your-api-host.example.com/api";
+</script>
+<script src="script.js"></script>
+```
+
 ## API
 
 - `GET /api/health`: database connectivity check
