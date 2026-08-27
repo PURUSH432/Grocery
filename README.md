@@ -32,7 +32,7 @@ to a Node.js host, then define `window.GOQUICK_API_URL` before `script.js` in
 
 ```html
 <script>
-   window.GOQUICK_API_URL = "https://your-api-host.example.com/api";
+  window.GOQUICK_API_URL = "https://your-api-host.example.com/api";
 </script>
 <script src="script.js"></script>
 ```
