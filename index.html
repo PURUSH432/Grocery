@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GoQuick - Grocery delivery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <header class="site-header">
+      <a class="brand" href="#"
+        ><span class="brand-mark">G</span><span>GoQuick</span></a
+      >
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="#categories">Categories</a><a href="#brands">Brands</a
+        ><a href="#products">Products</a><a href="#about">About us</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-button" aria-label="Search">⌕</button
+        ><button class="account-button" type="button" aria-label="Open account">
+          Sign in</button
+        ><button
+          class="logout-button"
+          type="button"
+          aria-label="Log out"
+          hidden
+        >
+          Logout</button
+        ><button class="cart-button" aria-label="Open cart">
+          Cart <span>0</span></button
+        ><button class="menu-button" aria-label="Open menu">☰</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero section-shell">
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span> Freshness delivered daily</p>
+          <h1>We deliver<br />to your <em>doorstep.</em></h1>
+          <p class="hero-text">
+            The freshest groceries, finest products and everyday essentials
+            brought right to your door in just a few clicks.
+          </p>
+          <button
+            class="primary-button"
+            onclick="
+              document
+                .querySelector('#products')
+                .scrollIntoView({ behavior: 'smooth' })
+            "
+          >
+            Shop now <span>→</span>
+          </button>
+          <div class="hero-note">
+            <div class="avatars">
+              <span>J</span><span>M</span><span>A</span>
+            </div>
+            <span>Trusted by <strong>12k+</strong> happy families</span>
+          </div>
+        </div>
+        <div class="hero-art">
+          <div class="hero-blob"></div>
+          <img
+            src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1100&q=85"
+            alt="Colorful fresh vegetables in a market basket"
+          />
+          <div class="delivery-badge">
+            <span>✦</span><strong>30 min</strong><small>delivery</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="promise section-shell">
+        <div class="promise-card">
+          <div class="promise-icon green">♧</div>
+          <div>
+            <h3>Fresh produce</h3>
+            <p>Picked with care, every day</p>
+          </div>
+        </div>
+        <div class="promise-card">
+          <div class="promise-icon orange">⌁</div>
+          <div>
+            <h3>Fast delivery</h3>
+            <p>At your door in 30 minutes</p>
+          </div>
+        </div>
+        <div class="promise-card">
+          <div class="promise-icon blue">♡</div>
+          <div>
+            <h3>Quality guaranteed</h3>
+            <p>Love it or get your money back</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-shell categories" id="categories">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">What are you looking for?</p>
+            <h2>Explore categories</h2>
+          </div>
+          <a class="text-link" href="#products">View all <span>→</span></a>
+        </div>
+        <div class="category-grid">
+          <article class="category produce">
+            <div class="category-image">
+              <img
+                src="https://images.unsplash.com/photo-1610348725531-843dff563e2c?auto=format&fit=crop&w=500&q=85"
+                alt="Fruits and vegetables"
+              />
+            </div>
+            <div>
+              <h3>Fruits &amp; Vegetables</h3>
+              <p>128 items</p>
+            </div>
+          </article>
+          <article class="category meat">
+            <div class="category-image">
+              <img
+                src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=500&q=85"
+                alt="Meat and fish"
+              />
+            </div>
+            <div>
+              <h3>Meat &amp; Fish</h3>
+              <p>86 items</p>
+            </div>
+          </article>
+          <article class="category pantry">
+            <div class="category-image">
+              <img
+                src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=500&q=85"
+                alt="Cooking ingredients"
+              />
+            </div>
+            <div>
+              <h3>Cooking</h3>
+              <p>104 items</p>
+            </div>
+          </article>
+          <article class="category drinks">
+            <div class="category-image">
+              <img
+                src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=500&q=85"
+                alt="Beverages"
+              />
+            </div>
+            <div>
+              <h3>Beverages</h3>
+              <p>72 items</p>
+            </div>
+          </article>
+          <article class="category home">
+            <div class="category-image">
+              <img
+                src="https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=500&q=85"
+                alt="Home cleaning supplies"
+              />
+            </div>
+            <div>
+              <h3>Home &amp; Cleaning</h3>
+              <p>80 items</p>
+            </div>
+          </article>
+          <article class="category pets">
+            <div class="category-image">
+              <img
+                src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=500&q=85"
+                alt="Pet food"
+              />
+            </div>
+            <div>
+              <h3>Pet supplies</h3>
+              <p>40 items</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="brands section-shell" id="brands">
+        <p class="eyebrow centered">Our selection</p>
+        <h2>Popular brands</h2>
+        <div class="brand-marquee">
+          <div class="brand-row">
+            <span class="brand-a">Let's Cook</span
+            ><strong class="brand-b">FOOD</strong
+            ><span class="script brand-c">Best Cook</span
+            ><span class="brand-d">◈ Cooking</span
+            ><span class="script brand-e">Marcises</span>
+            <span class="brand-a">Let's Cook</span
+            ><strong class="brand-b">FOOD</strong
+            ><span class="script brand-c">Best Cook</span
+            ><span class="brand-d">◈ Cooking</span
+            ><span class="script brand-e">Marcises</span>
+          </div>
+        </div>
+        <div class="brand-marquee reverse">
+          <div class="brand-row second">
+            <span class="brand-f">Cookingthep</span
+            ><strong class="brand-g">TOPOLIS</strong
+            ><span class="brand-h">CookME</span
+            ><span class="brand-i">BestFood</span
+            ><strong class="brand-j">GRILL&amp;BAR</strong
+            ><span class="brand-k">YY Shialist</span>
+            <span class="brand-f">Cookingthep</span
+            ><strong class="brand-g">TOPOLIS</strong
+            ><span class="brand-h">CookME</span
+            ><span class="brand-i">BestFood</span
+            ><strong class="brand-j">GRILL&amp;BAR</strong
+            ><span class="brand-k">YY Shialist</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="products section-shell" id="products">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Handpicked for you</p>
+            <h2>Popular products</h2>
+          </div>
+          <div class="filter-tabs">
+            <button class="active">All</button><button>Fruits</button
+            ><button>Dairy</button><button>Bakery</button>
+          </div>
+        </div>
+        <div class="product-grid">
+          <article class="product-card">
+            <button class="heart">♡</button>
+            <div class="product-photo">
+              <img
+                src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=500&q=85"
+                alt="Red apples"
+              />
+            </div>
+            <p class="product-type">Fruits</p>
+            <h3>Organic red apples</h3>
+            <div class="product-bottom">
+              <strong>$3.90 <small>/ kg</small></strong
+              ><button
+                class="add"
+                data-product-id="1"
+                aria-label="Add apples to cart"
+              >
+                +
+              </button>
+            </div>
+          </article>
+          <article class="product-card">
+            <button class="heart">♡</button>
+            <div class="product-photo">
+              <img
+                src="https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&w=500&q=85"
+                alt="Cheddar cheese"
+              />
+            </div>
+            <p class="product-type">Dairy</p>
+            <h3>Vintage cheddar cheese</h3>
+            <div class="product-bottom">
+              <strong>$8.50 <small>/ 500 g</small></strong
+              ><button
+                class="add"
+                data-product-id="2"
+                aria-label="Add cheese to cart"
+              >
+                +
+              </button>
+            </div>
+          </article>
+          <article class="product-card">
+            <button class="heart">♡</button>
+            <div class="product-photo">
+              <img
+                src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=500&q=85"
+                alt="Fresh bread"
+              />
+            </div>
+            <p class="product-type">Bakery</p>
+            <h3>Country sourdough loaf</h3>
+            <div class="product-bottom">
+              <strong>$4.20 <small>/ 500 g</small></strong
+              ><button
+                class="add"
+                data-product-id="3"
+                aria-label="Add bread to cart"
+              >
+                +
+              </button>
+            </div>
+          </article>
+          <article class="product-card">
+            <button class="heart">♡</button>
+            <div class="product-photo">
+              <img
+                src="https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=500&q=85"
+                alt="Fresh pineapple"
+              />
+            </div>
+            <p class="product-type">Fruits</p>
+            <h3>Sweet golden pineapple</h3>
+            <div class="product-bottom">
+              <strong>$2.80 <small>/ each</small></strong
+              ><button
+                class="add"
+                data-product-id="4"
+                aria-label="Add pineapple to cart"
+              >
+                +
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="app-section section-shell" id="about">
+        <div class="app-visual">
+          <img
+            src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=85"
+            alt="GoQuick grocery app on a phone"
+          />
+        </div>
+        <div class="app-copy">
+          <p class="eyebrow">GoQuick in your pocket</p>
+          <h2>Connecting our user with iOS &amp; Android apps.</h2>
+          <p>
+            Download the GoQuick app and get fresh groceries, exclusive offers,
+            and quick delivery wherever you are.
+          </p>
+          <div class="store-buttons">
+            <a href="#" class="store-button"
+              ><b></b><span><small>Download on the</small>App Store</span></a
+            ><a href="#" class="store-button"
+              ><b>▶</b><span><small>GET IT ON</small>Google Play</span></a
+            >
+          </div>
+        </div>
+      </section>
+      <section class="faq section-shell">
+        <p class="eyebrow centered">Need a little help?</p>
+        <h2>Common Questions</h2>
+        <div class="faq-list">
+          <details open>
+            <summary>What is Your Policy On Refunds? <span>⌃</span></summary>
+            <p>
+              If an item is missing, damaged, or not quite right, let us know
+              within 24 hours and we will make it right with a replacement or a
+              full refund.
+            </p>
+          </details>
+          <details>
+            <summary>How Much Do Deliveries Cost? <span>⌄</span></summary>
+            <p>
+              Delivery is free on orders over $35. A small delivery fee applies
+              to smaller orders.
+            </p>
+          </details>
+          <details>
+            <summary>What Are Your Delivery Hours? <span>⌄</span></summary>
+            <p>We deliver every day from 8:00 AM to 10:00 PM.</p>
+          </details>
+          <details>
+            <summary>What About The Prices? <span>⌄</span></summary>
+            <p>
+              Our prices are updated regularly to keep your everyday shop fresh
+              and fair.
+            </p>
+          </details>
+          <details>
+            <summary>Do You Serve My Area? <span>⌄</span></summary>
+            <p>
+              Enter your address at checkout to see if GoQuick is available near
+              you.
+            </p>
+          </details>
+        </div>
+        <div class="help-callout">
+          <div>
+            <strong>Still Have Questions?</strong>
+            <p>Can't find the answer you need? We're here to help.</p>
+          </div>
+          <a href="mailto:spurushothaman95@gmail.com" class="primary-button"
+            >Get in touch <span>→</span></a
+          >
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-download">
+          <strong>Download our app</strong>
+          <div class="footer-stores">
+            <a href="#"> App Store</a><a href="#">▶ Google Play</a>
+          </div>
+          <div class="socials">
+            <a href="#">f</a><a href="#">◎</a><a href="#">𝕏</a>
+          </div>
+        </div>
+        <div class="footer-contact">
+          <strong>Need help?</strong>
+          <p>
+            <a href="tel:+918870315643">+91 8870315643</a><br /><a
+              href="tel:+919790543053"
+              >+91 9790543053</a
+            >
+          </p>
+          <a href="mailto:spurushothaman95@gmail.com"
+            >spurushothaman95@gmail.com</a
+          >
+        </div>
+        <div class="footer-links">
+          <strong>Customer</strong><a href="#">My account</a
+          ><a href="#">My orders</a><a href="#">Buy &amp; save</a
+          ><a href="#">Returns</a>
+        </div>
+        <div class="footer-links">
+          <strong>Information</strong><a href="#">About us</a
+          ><a href="#">Shipping</a><a href="#">FAQ</a
+          ><a href="#">Privacy Policy</a><a href="#">Terms of Use</a>
+        </div>
+      </div>
+      <div class="copyright">© 2024 GoQuick. All rights reserved.</div>
+    </footer>
+    <div class="cart-overlay" hidden>
+      <aside class="cart-drawer" aria-label="Shopping cart">
+        <div class="cart-drawer-head">
+          <div>
+            <p class="eyebrow">Your basket</p>
+            <h2>Your cart <span class="drawer-count">0</span></h2>
+          </div>
+          <button class="cart-close" type="button" aria-label="Close cart">
+            ×
+          </button>
+        </div>
+        <div class="cart-items"></div>
+        <div class="cart-empty" hidden>
+          <strong>Your cart is empty</strong>
+          <p>Add something fresh to get started.</p>
+          <button class="primary-button continue-shopping" type="button">
+            Continue shopping <span>→</span>
+          </button>
+        </div>
+        <div class="cart-summary">
+          <div>
+            <span>Subtotal</span><strong class="cart-total">$0.00</strong>
+          </div>
+          <p>Delivery and taxes calculated at checkout.</p>
+          <button class="primary-button checkout-button" type="button">
+            Checkout <span>→</span>
+          </button>
+        </div>
+      </aside>
+    </div>
+    <div class="checkout-overlay" hidden>
+      <section
+        class="checkout-page"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="checkout-title"
+      >
+        <div class="checkout-head">
+          <div>
+            <p class="eyebrow">Almost there</p>
+            <h2 id="checkout-title">Complete your order</h2>
+          </div>
+          <button
+            class="checkout-close"
+            type="button"
+            aria-label="Close checkout"
+          >
+            ×
+          </button>
+        </div>
+        <form class="checkout-form">
+          <div class="checkout-fields">
+            <label
+              >Customer name<input
+                name="customerName"
+                required
+                autocomplete="name" /></label
+            ><label
+              >Phone number<input
+                name="phone"
+                type="tel"
+                required
+                pattern="[0-9+() -]{7,}"
+                autocomplete="tel" /></label
+            ><label class="address-field"
+              >Delivery address<textarea
+                name="shippingAddress"
+                rows="3"
+                required
+                autocomplete="street-address"
+              ></textarea>
+            </label>
+          </div>
+          <div class="checkout-payment">
+            <h3>Payment method</h3>
+            <label class="payment-option"
+              ><input
+                type="radio"
+                name="paymentMethod"
+                value="UPI"
+                required
+                checked
+              /><span
+                ><b>UPI</b><small>Pay securely with your UPI app</small></span
+              ></label
+            ><label class="payment-option"
+              ><input
+                type="radio"
+                name="paymentMethod"
+                value="Debit Card"
+              /><span
+                ><b>Debit Card</b
+                ><small>Visa, Mastercard and RuPay</small></span
+              ></label
+            ><label class="payment-option"
+              ><input
+                type="radio"
+                name="paymentMethod"
+                value="Cash on Delivery"
+              /><span
+                ><b>Cash on Delivery</b
+                ><small>Pay when your order arrives</small></span
+              ></label
+            >
+          </div>
+          <div class="checkout-bottom">
+            <div>
+              <span>Total cost</span
+              ><strong class="checkout-total">$0.00</strong>
+            </div>
+            <p class="checkout-message" role="alert"></p>
+            <button class="primary-button place-order" type="submit">
+              Place order <span>→</span>
+            </button>
+          </div>
+        </form>
+      </section>
+    </div>
+    <div class="auth-overlay" hidden>
+      <section
+        class="auth-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="auth-title"
+      >
+        <button
+          class="auth-close"
+          type="button"
+          aria-label="Close account dialog"
+        >
+          ×
+        </button>
+        <p class="eyebrow">Welcome to GoQuick</p>
+        <h2 id="auth-title">Your groceries,<br /><em>your way.</em></h2>
+        <div class="auth-tabs" role="tablist">
+          <button
+            class="auth-tab active"
+            type="button"
+            data-mode="login"
+            role="tab"
+          >
+            Sign in</button
+          ><button
+            class="auth-tab"
+            type="button"
+            data-mode="register"
+            role="tab"
+          >
+            Create account
+          </button>
+        </div>
+        <form class="auth-form">
+          <label class="name-field" hidden
+            >Full name<input name="name" autocomplete="name"
+          /></label>
+          <label
+            >Email address<input
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+          /></label>
+          <label
+            >Password<input
+              name="password"
+              type="password"
+              minlength="8"
+              autocomplete="current-password"
+              required
+          /></label>
+          <p class="auth-message" role="alert"></p>
+          <button class="primary-button auth-submit" type="submit">
+            Sign in <span>→</span>
+          </button>
+        </form>
+        <p class="auth-switch">
+          New to GoQuick? <button type="button">Create an account</button>
+        </p>
+      </section>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order placed successfully - GoQuick</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="success-body">
+    <header class="site-header success-header">
+      <a class="brand" href="index.html"
+        ><span class="brand-mark">G</span><span>GoQuick</span></a
+      >
+      <a class="back-shop" href="index.html">Back to shop <span>→</span></a>
+    </header>
+    <main class="success-main">
+      <section class="success-card" aria-labelledby="success-title">
+        <div class="success-icon">✓</div>
+        <p class="eyebrow centered">Thank you for shopping with us</p>
+        <h1 id="success-title">Order placed<br /><em>successfully!</em></h1>
+        <p class="success-copy">
+          Thanks, <strong class="success-customer">there</strong>. Your order is
+          on its way. We will notify you when your fresh groceries are out for
+          delivery.
+        </p>
+        <div class="success-details">
+          <div>
+            <span>Order number</span
+            ><strong class="success-order-id">#0000</strong>
+          </div>
+          <div>
+            <span>Total cost</span
+            ><strong class="success-order-total">$0.00</strong>
+          </div>
+          <div>
+            <span>Payment</span
+            ><strong class="success-payment">Cash on Delivery</strong>
+          </div>
+        </div>
+        <div class="success-delivery">
+          <b>Estimated delivery</b><br />Today, within 30 minutes
+        </div>
+        <a class="primary-button success-continue" href="index.html#products"
+          >Continue shopping <span>→</span></a
+        >
+      </section>
+    </main>
+    <script>
+      const order = JSON.parse(
+        sessionStorage.getItem("goquick_last_order") || "null",
+      );
+      if (order) {
+        document.querySelector(".success-order-id").textContent =
+          `#${order.orderId}`;
+        document.querySelector(".success-order-total").textContent =
+          `$${Number(order.total).toFixed(2)}`;
+        document.querySelector(".success-payment").textContent =
+          order.paymentMethod;
+        document.querySelector(".success-customer").textContent =
+          order.customerName || "there";
+      }
+    </script>
+  </body>
+</html>
