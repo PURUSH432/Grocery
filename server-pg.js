@@ -29,6 +29,10 @@ const pool = new Pool(
       },
 );
 const jwtSecret = process.env.JWT_SECRET || "development-secret-change-me";
+const corsOrigins = (process.env.CORS_ORIGIN || "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 const razorpay =
   process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET
     ? new Razorpay({
@@ -38,6 +42,25 @@ const razorpay =
     : null;
 app.use(express.json());
 app.use(express.static(root));
+app.use((req, res, next) => {
+  const requestOrigin = req.headers.origin;
+  if (
+    !requestOrigin ||
+    corsOrigins.length === 0 ||
+    corsOrigins.includes(requestOrigin)
+  ) {
+    if (requestOrigin)
+      res.setHeader("Access-Control-Allow-Origin", requestOrigin);
+    res.setHeader("Vary", "Origin");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization",
+    );
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    if (req.method === "OPTIONS") return res.sendStatus(204);
+  }
+  next();
+});
 
 const tokenFor = (user) =>
   jwt.sign({ id: user.id, email: user.email, name: user.name }, jwtSecret, {

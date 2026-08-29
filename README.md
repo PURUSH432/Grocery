@@ -5,7 +5,7 @@
 1. Install PostgreSQL locally, or create a Render PostgreSQL database from the Render dashboard.
 2. Copy `.env.example` to `.env` and set `DB_USER`, `DB_PASSWORD`, and `JWT_SECRET`.
    For UPI checkout, also add your Razorpay test credentials: `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET`.
-   Run `migrate-order-payments.sql` for existing MySQL databases to store Razorpay transaction IDs.
+   Run `migrate-order-payments.sql` only for existing MySQL databases to store Razorpay transaction IDs.
 3. Create the database and seed the products:
 
 ```powershell
@@ -39,17 +39,19 @@ without exposing credentials.
 
 ## GitHub Pages deployment
 
-GitHub Pages hosts the frontend only. MySQL and `server.js` must run on a
-separate host. `render.yaml` provides a Render backend blueprint. Create a
-hosted MySQL database, deploy the blueprint, and set its `DB_*` and Razorpay
-environment variables in Render.
+GitHub Pages hosts the frontend only. The PostgreSQL API runs separately on
+Render using `server-pg.js`. Deploy the service from `render.yaml`, then set
+`DATABASE_URL` to the internal connection string of your Render PostgreSQL
+database and set the Razorpay environment variables if needed.
 
-After creating the Render database, copy its internal connection string into the
-backend service environment variable `DATABASE_URL`. After the backend is
-deployed, add a GitHub Actions repository variable named
-`GOQUICK_API_URL` containing the backend URL ending in `/api`. The Pages
-workflow writes that value into `config.js` during deployment. If the variable
-is missing, the local relative `/api` fallback is used.
+Set `CORS_ORIGIN` on the Render web service to your complete GitHub Pages origin,
+for example `https://purush432.github.io`. Add a GitHub Actions repository
+variable named `GOQUICK_API_URL` containing the Render backend URL ending in
+`/api`. The Pages workflow writes that value into `config.js` during deployment.
+
+Run `schema-postgres.sql` once against the Render database in pgAdmin or with
+`psql` before creating accounts. The registration endpoint then inserts the
+name, email, bcrypt password hash, and timestamp into `users`.
 
 For local development, `config.js` keeps the API on the same origin. A manual
 override still works:
