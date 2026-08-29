@@ -33,6 +33,13 @@ jobs:
         uses: actions/checkout@v7
       - name: Setup Pages
         uses: actions/configure-pages@v6
+      - name: Configure frontend API URL
+        env:
+          GOQUICK_API_URL: ${{ vars.GOQUICK_API_URL }}
+        run: |
+          if [ -n "$GOQUICK_API_URL" ]; then
+            printf 'window.GOQUICK_API_URL = "%s";\n' "$GOQUICK_API_URL" > config.js
+          fi
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
