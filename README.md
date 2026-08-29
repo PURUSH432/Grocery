@@ -47,7 +47,8 @@ database and set the Razorpay environment variables if needed.
 Set `CORS_ORIGIN` on the Render web service to your complete GitHub Pages origin,
 for example `https://purush432.github.io`. Add a GitHub Actions repository
 variable named `GOQUICK_API_URL` containing the Render backend URL ending in
-`/api`. The Pages workflow writes that value into `config.js` during deployment.
+`/api`, for example `https://grocery-1-sabr.onrender.com/api`. The Pages workflow
+also appends `/api` automatically if only the Render service URL is entered.
 
 Run `schema-postgres.sql` once against the Render database in pgAdmin or with
 `psql` before creating accounts. The registration endpoint then inserts the

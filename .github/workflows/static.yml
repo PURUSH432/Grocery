@@ -38,6 +38,11 @@ jobs:
           GOQUICK_API_URL: ${{ vars.GOQUICK_API_URL }}
         run: |
           if [ -n "$GOQUICK_API_URL" ]; then
+            GOQUICK_API_URL="${GOQUICK_API_URL%/}"
+            case "$GOQUICK_API_URL" in
+              */api) ;;
+              *) GOQUICK_API_URL="${GOQUICK_API_URL}/api" ;;
+            esac
             printf 'window.GOQUICK_API_URL = "%s";\n' "$GOQUICK_API_URL" > config.js
           fi
       - name: Upload artifact
