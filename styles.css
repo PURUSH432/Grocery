@@ -8,6 +8,7 @@
   --cream: #fbfaf6;
 }
 
+.orders-overlay,
 .checkout-overlay {
   position: fixed;
   inset: 0;
@@ -17,8 +18,122 @@
   background: #182d3d99;
   padding: 20px;
 }
+.orders-overlay[hidden],
 .checkout-overlay[hidden] {
   display: none;
+}
+.orders-panel {
+  width: min(100%, 700px);
+  max-height: calc(100vh - 40px);
+  overflow: auto;
+  background: #fff;
+  border-radius: 10px;
+  padding: 28px 26px 22px;
+  box-shadow: 0 20px 70px #182d3d40;
+}
+.orders-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+}
+.orders-head .eyebrow {
+  margin-bottom: 5px;
+}
+.orders-head h2 {
+  font:
+    700 30px/1.1 "Playfair Display",
+    serif;
+  margin: 0;
+}
+.orders-close {
+  background: transparent;
+  font-size: 28px;
+  color: var(--muted);
+  line-height: 1;
+}
+.orders-list {
+  display: grid;
+  gap: 16px;
+}
+.order-card {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px 18px;
+  background: #fff;
+}
+.order-card-head,
+.order-summary,
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.order-card-head {
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 12px;
+}
+.order-card-head span,
+.order-summary span {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.order-card-head strong,
+.order-item strong,
+.order-summary strong {
+  display: block;
+  color: var(--ink);
+}
+.order-status {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: #eefaf3;
+  color: var(--green);
+  font-size: 11px;
+  padding: 6px 9px;
+  text-transform: capitalize;
+  font-weight: 700;
+}
+.order-items {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.order-item {
+  font-size: 14px;
+  color: var(--ink);
+}
+.order-summary {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+.orders-empty {
+  display: grid;
+  place-items: center;
+  min-height: 180px;
+  text-align: center;
+  color: var(--muted);
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  padding: 24px;
+}
+.orders-empty strong {
+  color: var(--ink);
+  display: block;
+  margin-bottom: 6px;
+  font-size: 20px;
+}
+.orders-error {
+  margin: 0;
+  color: #cc5b45;
+  font-size: 14px;
 }
 .checkout-page {
   width: min(100%, 760px);

@@ -101,12 +101,10 @@ app.get("/api/products", async (req, res) => {
 
 app.post("/api/payments/create-order", requireUser, async (req, res) => {
   if (!razorpay)
-    return res
-      .status(503)
-      .json({
-        error:
-          "Razorpay is not configured. Add RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET to .env",
-      });
+    return res.status(503).json({
+      error:
+        "Razorpay is not configured. Add RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET to .env",
+    });
   try {
     const [[cart]] = await pool.query(
       "SELECT id FROM carts WHERE user_id = ?",
@@ -132,12 +130,10 @@ app.post("/api/payments/create-order", requireUser, async (req, res) => {
       keyId: process.env.RAZORPAY_KEY_ID,
     });
   } catch (error) {
-    res
-      .status(502)
-      .json({
-        error: "Could not create Razorpay order",
-        details: error.message,
-      });
+    res.status(502).json({
+      error: "Could not create Razorpay order",
+      details: error.message,
+    });
   }
 });
 
@@ -233,6 +229,29 @@ app.get("/api/cart", requireUser, async (req, res) => {
   }
 });
 
+app.get("/api/orders", requireUser, async (req, res) => {
+  try {
+    const [rows] = await pool.query(
+      "SELECT id AS orderId, total, status, customer_name AS customerName, phone, shipping_address AS shippingAddress, payment_method AS paymentMethod, created_at AS createdAt FROM orders WHERE user_id = ? ORDER BY id DESC",
+      [req.user.id],
+    );
+    const orders = await Promise.all(
+      rows.map(async (order) => {
+        const [items] = await pool.query(
+          "SELECT product_id AS productId, product_name AS name, unit_price AS price, quantity FROM order_items WHERE order_id = ? ORDER BY product_name",
+          [order.orderId],
+        );
+        return { ...order, items };
+      }),
+    );
+    res.json({ orders });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Could not load orders", details: error.message });
+  }
+});
+
 app.post("/api/cart/items", requireUser, async (req, res) => {
   const productId = Number(req.body.productId);
   const quantity = Number(req.body.quantity || 1);
@@ -283,12 +302,10 @@ app.post("/api/orders", requireUser, async (req, res) => {
       !razorpayPaymentId ||
       expected !== razorpaySignature
     )
-      return res
-        .status(400)
-        .json({
-          error:
-            "UPI payment must be completed and verified before placing the order",
-        });
+      return res.status(400).json({
+        error:
+          "UPI payment must be completed and verified before placing the order",
+      });
   }
   const connection = await pool.getConnection();
   try {

@@ -42,6 +42,7 @@ window.GoQuickAPI = {
   },
   logout: () => localStorage.removeItem("goquick_token"),
   cart: () => apiRequest("/cart"),
+  orders: () => apiRequest("/orders"),
   addToCart: (productId, quantity = 1) =>
     apiRequest("/cart/items", {
       method: "POST",
@@ -64,6 +65,7 @@ window.GoQuickAPI = {
 const authOverlay = document.querySelector(".auth-overlay");
 const authModal = document.querySelector(".auth-modal");
 const accountButton = document.querySelector(".account-button");
+const ordersButton = document.querySelector(".orders-button");
 const logoutButton = document.querySelector(".logout-button");
 const authForm = document.querySelector(".auth-form");
 const authTitle = document.querySelector("#auth-title");
@@ -115,15 +117,18 @@ function setLoggedInState(name = "My account") {
   accountButton.textContent = name;
   accountButton.setAttribute("aria-label", "Open account");
   logoutButton.hidden = false;
+  ordersButton.hidden = false;
 }
 function logout() {
   window.GoQuickAPI.logout();
   localStorage.removeItem("goquick_cart");
   accountButton.textContent = "Sign in";
   logoutButton.hidden = true;
+  ordersButton.hidden = true;
   cartItems = 0;
   renderCart([]);
   cartOverlay.hidden = true;
+  ordersOverlay.hidden = true;
 }
 logoutButton.addEventListener("click", logout);
 document.querySelector(".auth-close").addEventListener("click", () => {
@@ -180,6 +185,9 @@ const cartEmpty = document.querySelector(".cart-empty");
 const cartSummary = document.querySelector(".cart-summary");
 const cartTotal = document.querySelector(".cart-total");
 const drawerCount = document.querySelector(".drawer-count");
+const ordersOverlay = document.querySelector(".orders-overlay");
+const ordersList = document.querySelector(".orders-list");
+const ordersEmpty = document.querySelector(".orders-empty");
 const checkoutOverlay = document.querySelector(".checkout-overlay");
 const checkoutForm = document.querySelector(".checkout-form");
 const checkoutTotal = document.querySelector(".checkout-total");
@@ -222,12 +230,79 @@ function openCart() {
   cartOverlay.hidden = false;
 }
 
+function renderOrders(orders = []) {
+  if (!orders.length) {
+    ordersList.innerHTML = "";
+    ordersEmpty.hidden = false;
+    return;
+  }
+  ordersEmpty.hidden = true;
+  ordersList.innerHTML = orders
+    .map(
+      (order) => `
+        <article class="order-card">
+          <div class="order-card-head">
+            <div>
+              <span>Order #${order.orderId}</span>
+              <strong>${new Date(order.createdAt).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}</strong>
+            </div>
+            <span class="order-status">${order.status}</span>
+          </div>
+          <div class="order-items">
+            ${order.items
+              .map(
+                (item) => `
+                  <div class="order-item">
+                    <span>${item.name} × ${item.quantity}</span>
+                    <strong>$${(Number(item.price) * Number(item.quantity)).toFixed(2)}</strong>
+                  </div>
+                `,
+              )
+              .join("")}
+          </div>
+          <div class="order-summary">
+            <span>${order.items.length} item${order.items.length !== 1 ? "s" : ""}</span>
+            <strong>$${Number(order.total).toFixed(2)}</strong>
+          </div>
+        </article>
+      `,
+    )
+    .join("");
+}
+
+async function openOrders() {
+  if (!localStorage.getItem("goquick_token")) {
+    openAuth("login");
+    authMessage.textContent = "Sign in to view your orders.";
+    return;
+  }
+  ordersOverlay.hidden = false;
+  try {
+    const result = await window.GoQuickAPI.orders();
+    renderOrders(result.orders);
+  } catch (error) {
+    ordersList.innerHTML = `<p class="orders-error">${error.message}</p>`;
+    ordersEmpty.hidden = true;
+  }
+}
+
 cartButton.addEventListener("click", openCart);
+ordersButton.addEventListener("click", openOrders);
 document.querySelector(".cart-close").addEventListener("click", () => {
   cartOverlay.hidden = true;
 });
+document.querySelector(".orders-close").addEventListener("click", () => {
+  ordersOverlay.hidden = true;
+});
 cartOverlay.addEventListener("click", (event) => {
   if (event.target === cartOverlay) cartOverlay.hidden = true;
+});
+ordersOverlay.addEventListener("click", (event) => {
+  if (event.target === ordersOverlay) ordersOverlay.hidden = true;
 });
 document.querySelector(".continue-shopping").addEventListener("click", () => {
   cartOverlay.hidden = true;

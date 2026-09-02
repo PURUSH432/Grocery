@@ -190,6 +190,28 @@ app.get("/api/cart", requireUser, async (req, res) => {
       .json({ error: "Could not load cart", details: error.message });
   }
 });
+app.get("/api/orders", requireUser, async (req, res) => {
+  try {
+    const { rows } = await pool.query(
+      'SELECT id AS "orderId", total, status, customer_name AS "customerName", phone, shipping_address AS "shippingAddress", payment_method AS "paymentMethod", created_at AS "createdAt" FROM orders WHERE user_id = $1 ORDER BY id DESC',
+      [req.user.id],
+    );
+    const orders = await Promise.all(
+      rows.map(async (order) => {
+        const { rows: items } = await pool.query(
+          'SELECT product_id AS "productId", product_name AS name, unit_price AS price, quantity FROM order_items WHERE order_id = $1 ORDER BY product_name',
+          [order.orderId],
+        );
+        return { ...order, items };
+      }),
+    );
+    res.json({ orders });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Could not load orders", details: error.message });
+  }
+});
 app.post("/api/cart/items", requireUser, async (req, res) => {
   const client = await pool.connect();
   try {
